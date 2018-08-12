@@ -97,7 +97,7 @@ class App extends Component {
             id={cartoon.id}
             key={cartoon.id}
             name={cartoon.name}
-            cartoon={cartoon.cartoon}
+            image={cartoon.image}
             occupation={cartoon.occupation}
             location={cartoon.location}
           />
