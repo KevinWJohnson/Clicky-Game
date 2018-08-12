@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import ImageCard from "./components/ImageCard";
+import CartoonCard from "./components/CartoonCard";
 import Wrapper from "./components/Wrapper";
 import Title from "./components/Title";
-import images from "./images.json";
+import cartoons from "./cartoons.json";
 import "./App.css";
+
+
+var clickIdArray= [];
 
 function shuffleArray(array) {
   let i = array.length - 1;
@@ -18,15 +21,15 @@ function shuffleArray(array) {
 
 
 class App extends Component {
-  // Setting this.state.images to the images json array
+  // Setting this.state.cartoons to the cartoons json array
   state = {
-    images,
+    cartoons,
     score: 0,
-    clickIdArray= []
+    clickIdArray: []
   };
 
   
-  clickImage = id => {
+  clickCartoon = id => {
 
     var wasClicked = false;
 
@@ -36,22 +39,23 @@ class App extends Component {
       // Adding 1 to the score
       this.setState({ score: this.state.score + 1 });
 
-      // Adding id of clicked image to array
+      // Adding id of clicked cartoon to array
       var newclickIdArray = this.state.clickIdArray.slice();    
-      newclickIdArray.push(image.id);   
+      newclickIdArray.push(cartoon.id);   
       this.setState({clickIdArray:newclickIdArray})
 
-      // Shuffle the images array
-      shuffleArray(images);
+      // Shuffle the cartoons array
+      shuffleArray(cartoons);
       
     } else {
 
-      // Checking to see if the image has been clicked before
+      // Checking to see if the cartoon has been clicked before
       for (let i=0; i<clickIdArray.length; i++) {
-        if(id = image.id){
+        if(id = cartoon.id){
           wasClicked = true;
-          break; 
-       }    
+          break;
+        }
+      }    
     }
 
     if(wasClicked) {
@@ -62,39 +66,40 @@ class App extends Component {
        // Clearing the ClickIdArray
        clickIdArray= [];
 
-        // Shuffle the images array
-        shuffleArray(images);
+        // Shuffle the cartoons array
+        shuffleArray(cartoons);
 
     } else {
 
       // Adding 1 to the score
       this.setState({ score: this.state.score + 1 });
 
-      // Adding id of clicked image to array
+      // Adding id of clicked cartoon to array
       var newclickIdArray = this.state.clickIdArray.slice();    
-      newclickIdArray.push(image.id);   
+      newclickIdArray.push(cartoon.id);   
       this.setState({clickIdArray:newclickIdArray})
 
-      // Shuffle the images array
-      shuffleArray(images);
+      // Shuffle the cartoons array
+      shuffleArray(cartoons);
 
-    }
+    };
+  };
 
   
-  // Map over this.state.images and render a ImageCard component for each image object
+  // Map over this.state.cartoons and render a CartoonCard component for each cartoon object
   render() {
     return (
       <Wrapper>
-        <Title>Images List</Title>
-        {this.state.images.map(image => (
-          <ImageCard
-            removeImage={this.removeImage}
-            id={image.id}
-            key={image.id}
-            name={image.name}
-            image={image.image}
-            occupation={image.occupation}
-            location={image.location}
+        <Title>Cartoons List</Title>
+        {this.state.cartoons.map(cartoon => (
+          <CartoonCard
+            removeCartoon={this.removeCartoon}
+            id={cartoon.id}
+            key={cartoon.id}
+            name={cartoon.name}
+            cartoon={cartoon.cartoon}
+            occupation={cartoon.occupation}
+            location={cartoon.location}
           />
         ))}
       </Wrapper>

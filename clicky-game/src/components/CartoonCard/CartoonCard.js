@@ -1,10 +1,10 @@
 import React from "react";
-import "./ImageCard.css";
+import "./CartoonCard.css";
 
-const ImageCard = props => (
-  <div className="card" onClick={() => props.clickImage(props.id)}>
+const CartoonCard = props => (
+  <div className="card" onClick={() => props.clickCartoon(props.id)}>
     <div className="img-container">
-      <img alt={props.name} src={props.image} />
+      <img alt={props.name} src={props.cartoon} />
     </div>
     {/* <div className="content">
       <ul>
@@ -19,10 +19,10 @@ const ImageCard = props => (
         </li>
       </ul>
     </div>
-    <span onClick={() => props.removeImage(props.id)} className="remove">
+    <span onClick={() => props.removeCartoon(props.id)} className="remove">
       𝘅
     </span> */}
   </div>
 );
 
-export default ImageCard;
+export default CartoonCard;
