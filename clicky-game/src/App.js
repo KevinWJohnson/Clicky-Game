@@ -25,6 +25,7 @@ class App extends Component {
   state = {
     cartoons,
     score: 0,
+    topScore: 0,
     clickIdArray: []
   };
 
@@ -40,10 +41,10 @@ class App extends Component {
       this.setState({ score: this.state.score + 1 });
 
       // Adding id of clicked cartoon to array
-      var newclickIdArray = this.state.clickIdArray.slice();    
+      var newclickIdArray = this.state.clickIdArray.slice(); 
       newclickIdArray.push(cartoon.id);   
       this.setState({clickIdArray:newclickIdArray})
-
+   
       // Shuffle the cartoons array
       shuffleArray(cartoons);
       
