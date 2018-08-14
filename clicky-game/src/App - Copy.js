@@ -32,7 +32,8 @@ class App extends Component {
   
   clickCartoon = id => {
 
-    // Before the first cartoon is clicked the clickIdArray will be empty
+    var wasClicked = false;
+
     // array does not exist, is not an array, or is empty
     if (!Array.isArray(clickIdArray) || !clickIdArray.length) {
 
@@ -40,44 +41,51 @@ class App extends Component {
       this.setState({ score: this.state.score + 1 });
 
       // Adding id of clicked cartoon to array
+      
+      //var newclickIdArray = this.state.clickIdArray.slice(); 
+      //newclickIdArray.push(cartoon.id); 
       const newIDArray = this.state.cartoons.map(cartoon => (
-      newIDArray.push(id)));
+        newIDArray.push(id)));
       this.setState({clickIdArray:newIDArray})
    
       // Shuffle the cartoons array
-      this.setState({cartoons:shuffleArray(cartoons)});
+      shuffleArray(cartoons);
       
     } else {
 
-      // Filter this.state.clickIdArray for cartoons with an id not equal to the id being clicked
-      const filclickIdArray = this.state.clickIdArray.filter(pickedID => pickedID.id === id);
-        
-    // The filclickIdArray will be empty is the cartoon was not clicked previously by the person
-    // array does not exist, is not an array, or is empty
-    if (!Array.isArray(filclickIdArray) || !filclickIdArray.length) {
-    
-       // Adding 1 to the score
-       this.setState({ score: this.state.score + 1 });
+      // Might be able to use filter here
+      // Checking to see if the cartoon has been clicked before
+      for (let i=0; i<clickIdArray.length; i++) {
+        if(id = cartoon.id){
+          wasClicked = true;
+          break;
+        }
+      }    
+    }
 
-       // Adding id of clicked cartoon to array
-       const newIDArray = this.state.cartoons.map(cartoon => (
-       newIDArray.push(id)));
-       this.setState({clickIdArray:newIDArray})
- 
-       // Shuffle the cartoons array
-      this.setState({cartoons:shuffleArray(cartoons)});
-      
+    if(wasClicked) {
+
+       // Updating the score
+       this.setState({ score: 0 });
+
+       // Clearing the ClickIdArray
+       clickIdArray= [];
+
+        // Shuffle the cartoons array
+        shuffleArray(cartoons);
+
     } else {
 
+      // Adding 1 to the score
+      this.setState({ score: this.state.score + 1 });
 
-        // Updating the score
-        this.setState({ score: 0 });
- 
-        // Clearing the ClickIdArray
-        this.setState({clickIdArray:[]});
- 
-         // Shuffle the cartoons array
-      this.setState({cartoons:shuffleArray(cartoons)});
+      // Adding id of clicked cartoon to array
+      var newclickIdArray = this.state.clickIdArray.slice();    
+      newclickIdArray.push(cartoon.id);   
+      this.setState({clickIdArray:newclickIdArray})
+
+      // Shuffle the cartoons array
+      shuffleArray(cartoons);
 
     };
   };
