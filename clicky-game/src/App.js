@@ -79,7 +79,7 @@ class App extends Component {
   render() {
     return (
       <Wrapper>
-        <Title>Cartoons List</Title>
+        <Title>Cartoon List</Title>
         {this.state.cartoons.map(cartoon => (
           <CartoonCard
             removeCartoon={this.removeCartoon}
