@@ -35,13 +35,11 @@ class App extends Component {
     // array does not exist, is not an array, or is empty
     if (!Array.isArray(clickIdArray) || !clickIdArray.length) {
       // Adding 1 to the score
-      this.setState({ score: this.state.score + 1 });
-
-      // Adding id of clicked cartoon to array
-      this.setState({ clickIdArray:clickIdArray.push(id) });
-
-      // Shuffle the cartoons array
-      this.setState({ cartoons: shuffleArray(cartoons) });
+      const score = this.state.score + 1
+      let newArray = this.state.clickIdArray
+      newArray.push(id)
+      console.log("newArray: "+ newArray)
+      this.setState({ score, clickIdArray: newArray, cartoons: shuffleArray(cartoons) });
     } else {
       // Filter this.state.clickIdArray for cartoons with an id not equal to the id being clicked
       console.log("clickIdArray: "+clickIdArray)
@@ -53,22 +51,15 @@ class App extends Component {
       // array does not exist, is not an array, or is empty
       if (!Array.isArray(filclickIdArray) || !filclickIdArray.length) {
         // Adding 1 to the score
-        this.setState({ score: this.state.score + 1 });
-
-        // Adding id of clicked cartoon to array
-        this.setState({ clickIdArray:clickIdArray.push(id) });
-
-        // Shuffle the cartoons array
-        this.setState({ cartoons: shuffleArray(cartoons) });
+      const score = this.state.score + 1
+      let newArray = this.state.clickIdArray
+      newArray.push(id)
+      console.log("newArray: "+ newArray)
+      this.setState({ score, clickIdArray: newArray, cartoons: shuffleArray(cartoons) });
       } else {
         // Updating the score
-        this.setState({ score: 0 });
+        this.setState({ score: 0, clickIdArray: [], cartoons: shuffleArray(cartoons) });
 
-        // Clearing the ClickIdArray
-        this.setState({ clickIdArray: [] });
-
-        // Shuffle the cartoons array
-        this.setState({ cartoons: shuffleArray(cartoons) });
       }
     }
   };
