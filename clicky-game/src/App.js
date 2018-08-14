@@ -4,6 +4,8 @@ import Wrapper from "./components/Wrapper";
 import Title from "./components/Title";
 import cartoons from "./cartoons.json";
 import "./App.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 var clickIdArray = [];
 
@@ -28,6 +30,7 @@ class App extends Component {
   };
 
   clickCartoon = id => {
+    console.log("cartoon cliked id: "+id);
     // Before the first cartoon is clicked the clickIdArray will be empty
     // array does not exist, is not an array, or is empty
     if (!Array.isArray(clickIdArray) || !clickIdArray.length) {
@@ -35,15 +38,13 @@ class App extends Component {
       this.setState({ score: this.state.score + 1 });
 
       // Adding id of clicked cartoon to array
-      const newIDArray = this.state.cartoons.map(cartoon =>
-        newIDArray.push(id)
-      );
-      this.setState({ clickIdArray: newIDArray });
+      this.setState({ clickIdArray:clickIdArray.push(id) });
 
       // Shuffle the cartoons array
       this.setState({ cartoons: shuffleArray(cartoons) });
     } else {
       // Filter this.state.clickIdArray for cartoons with an id not equal to the id being clicked
+      console.log("clickIdArray: "+clickIdArray)
       const filclickIdArray = this.state.clickIdArray.filter(
         pickedID => pickedID.id === id
       );
@@ -55,10 +56,7 @@ class App extends Component {
         this.setState({ score: this.state.score + 1 });
 
         // Adding id of clicked cartoon to array
-        const newIDArray = this.state.cartoons.map(cartoon =>
-          newIDArray.push(id)
-        );
-        this.setState({ clickIdArray: newIDArray });
+        this.setState({ clickIdArray:clickIdArray.push(id) });
 
         // Shuffle the cartoons array
         this.setState({ cartoons: shuffleArray(cartoons) });
@@ -78,20 +76,24 @@ class App extends Component {
   // Map over this.state.cartoons and render a CartoonCard component for each cartoon object
   render() {
     return (
-      <Wrapper>
-        <Title>Cartoon List</Title>
-        {this.state.cartoons.map(cartoon => (
-          <CartoonCard
-            removeCartoon={this.removeCartoon}
-            id={cartoon.id}
-            key={cartoon.id}
-            name={cartoon.name}
-            image={cartoon.image}
-            occupation={cartoon.occupation}
-            location={cartoon.location}
-          />
-        ))}
-      </Wrapper>
+      <div>
+      <Navbar></Navbar>
+        <Wrapper>
+          <Title>Cartoon List</Title>
+          {this.state.cartoons.map(cartoon => (
+            <CartoonCard
+              clickCartoon={this.clickCartoon}
+              id={cartoon.id}
+              key={cartoon.id}
+              name={cartoon.name}
+              image={cartoon.image}
+              occupation={cartoon.occupation}
+              location={cartoon.location}
+            />
+          ))}
+        </Wrapper>
+        <Footer></Footer>
+      </div>
     );
   }
 }
