@@ -44,7 +44,11 @@ class App extends Component {
       // Filter this.state.clickIdArray for cartoons with an id not equal to the id being clicked
       console.log("clickIdArray: "+clickIdArray)
       const filclickIdArray = this.state.clickIdArray.filter(
-        pickedID => pickedID.id === id
+        pickedID => {
+          console.log("pickedID.id: "+pickedID.id)
+        console.log("id: "+id)
+          return pickedID.id === id
+        }
       );
 
       // The filclickIdArray will be empty is the cartoon was not clicked previously by the person
