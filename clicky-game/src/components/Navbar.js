@@ -20,23 +20,12 @@ const styles = {
 const Navbar = () => (
   <nav style={styles.navbarStyle} className="navbar">
     <a href="/">Clicky Game</a>
+    {/* <a href="/">Score: {props.score}</a> */}
+    <a href="/">Score: 3</a>
+    {/* <a href="/">Top Score: {props.topScore}</a> */}
+    <a href="/">Top Score: 9</a>
 
-<div className="collapse navbar-collapse" id="navbarNav">
-    <ul className="navbar-nav">
-      <li className="nav-item">
-        <a className="nav-link" href="/">Clicky Game</a>
-      </li>
-      {/* <li className="nav-item">
-        <a className="nav-link" href="#">{clickMessage}</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="#">Score: {score}</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="#">Top Score: {topScore}</a>
-      </li> */}
-    </ul>
-  </div>
+
 
 
 

@@ -9,7 +9,6 @@ import Footer from "./components/Footer";
 
 var clickIdArray = [];
 
-
 function shuffleArray(array) {
   let i = array.length - 1;
   for (; i > 0; i--) {
@@ -28,49 +27,66 @@ class App extends Component {
     score: 0,
     topScore: 0,
     clickIdArray: [],
-    clickMessage: "Click on an image to earn points, but don't click on any more than once!"
+    clickMessage:
+      "Click on an image to earn points, but don't click on any more than once!"
   };
 
   clickCartoon = id => {
-    console.log("cartoon cliked id: "+id);
-  
+    console.log("cartoon cliked id: " + id);
+
     // Before the first cartoon is clicked the clickIdArray will be empty
     // array does not exist, is not an array, or is empty
     if (!Array.isArray(clickIdArray) || !clickIdArray.length) {
       // Adding 1 to the score
-      const score = this.state.score + 1
-      let newArray = this.state.clickIdArray
-      newArray.push(id)
+      const score = this.state.score + 1;
+      let newArray = this.state.clickIdArray;
+      newArray.push(id);
 
-      this.setState({ score, clickIdArray: newArray, cartoons: shuffleArray(cartoons) });
-      console.log("newArray before else: "+ newArray)
-      console.log("clickIdArray before 1st else: "+ clickIdArray)
-
+      this.setState({
+        score,
+        clickIdArray: newArray,
+        cartoons: shuffleArray(cartoons)
+      });
+      console.log("newArray before else: " + newArray);
+      console.log("clickIdArray before 1st else: " + clickIdArray);
     } else {
       // Filter this.state.clickIdArray for cartoons with an id not equal to the id being clicked
-      const filclickIdArray = this.state.clickIdArray.filter(
-        pickedID => {
-          return pickedID.id === id
-        }
-      );
+      const filclickIdArray = this.state.clickIdArray.filter(pickedID => {
+        return pickedID.id === id;
+      });
 
-      console.log("filclickIdArray: "+ filclickIdArray)
+      console.log("filclickIdArray: " + filclickIdArray);
       // The filclickIdArray will be empty is the cartoon was not clicked previously by the person
       // array does not exist, is not an array, or is empty
       if (!Array.isArray(filclickIdArray) || !filclickIdArray.length) {
         // Adding 1 to the score
-      const score = this.state.score + 1
-      let newArray = this.state.clickIdArray
-      newArray.push(id)
-     
-      this.setState({ score, clickIdArray: newArray, cartoons: shuffleArray(cartoons) });
-      this.setState({ clickMessage: "You guessed correctly!"});
-      console.log("clickIdArray before else: "+ clickIdArray)
-      } else {
-        // Updating the score
-        this.setState({ score: 0, clickIdArray: [], cartoons: shuffleArray(cartoons) });
-        this.setState({ clickMessage: "You guessed incorrectly!"});
+        const score = this.state.score + 1;
 
+        let newArray = this.state.clickIdArray;
+        newArray.push(id);
+
+        this.setState({
+          score,
+          clickIdArray: newArray,
+          cartoons: shuffleArray(cartoons)
+        });
+        this.setState({ clickMessage: "You guessed correctly!" });
+        console.log("clickIdArray before else: " + clickIdArray);
+      } else {
+        // Setting the top score
+        if (this.state.score > this.topScore) {
+          const score = this.state.score;
+          const topScore = this.state.score;
+          this.setState({ topScore: score });
+        }
+
+        // Updating the score
+        this.setState({
+          score: 0,
+          clickIdArray: [],
+          cartoons: shuffleArray(cartoons)
+        });
+        this.setState({ clickMessage: "You guessed incorrectly!" });
       }
     }
   };
@@ -79,7 +95,7 @@ class App extends Component {
   render() {
     return (
       <div>
-      <Navbar></Navbar>
+        <Navbar />
         <Wrapper>
           <Title>Cartoon List</Title>
           <h1> {this.state.clickMessage}</h1>
@@ -95,7 +111,7 @@ class App extends Component {
             />
           ))}
         </Wrapper>
-        <Footer></Footer>
+        <Footer />
       </div>
     );
   }
