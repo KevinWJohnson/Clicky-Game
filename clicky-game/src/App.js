@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 
 var clickIdArray = [];
 
+
 function shuffleArray(array) {
   let i = array.length - 1;
   for (; i > 0; i--) {
@@ -26,11 +27,13 @@ class App extends Component {
     cartoons,
     score: 0,
     topScore: 0,
-    clickIdArray: []
+    clickIdArray: [],
+    clickMessage: "Click on an image to earn points, but don't click on any more than once!"
   };
 
   clickCartoon = id => {
     console.log("cartoon cliked id: "+id);
+  
     // Before the first cartoon is clicked the clickIdArray will be empty
     // array does not exist, is not an array, or is empty
     if (!Array.isArray(clickIdArray) || !clickIdArray.length) {
@@ -38,19 +41,20 @@ class App extends Component {
       const score = this.state.score + 1
       let newArray = this.state.clickIdArray
       newArray.push(id)
-      console.log("newArray: "+ newArray)
+
       this.setState({ score, clickIdArray: newArray, cartoons: shuffleArray(cartoons) });
+      console.log("newArray before else: "+ newArray)
+      console.log("clickIdArray before 1st else: "+ clickIdArray)
+
     } else {
       // Filter this.state.clickIdArray for cartoons with an id not equal to the id being clicked
-      console.log("clickIdArray: "+clickIdArray)
       const filclickIdArray = this.state.clickIdArray.filter(
         pickedID => {
-          console.log("pickedID.id: "+pickedID.id)
-        console.log("id: "+id)
           return pickedID.id === id
         }
       );
 
+      console.log("filclickIdArray: "+ filclickIdArray)
       // The filclickIdArray will be empty is the cartoon was not clicked previously by the person
       // array does not exist, is not an array, or is empty
       if (!Array.isArray(filclickIdArray) || !filclickIdArray.length) {
@@ -58,11 +62,14 @@ class App extends Component {
       const score = this.state.score + 1
       let newArray = this.state.clickIdArray
       newArray.push(id)
-      console.log("newArray: "+ newArray)
+     
       this.setState({ score, clickIdArray: newArray, cartoons: shuffleArray(cartoons) });
+      this.setState({ clickMessage: "You guessed correctly!"});
+      console.log("clickIdArray before else: "+ clickIdArray)
       } else {
         // Updating the score
         this.setState({ score: 0, clickIdArray: [], cartoons: shuffleArray(cartoons) });
+        this.setState({ clickMessage: "You guessed incorrectly!"});
 
       }
     }
@@ -75,6 +82,7 @@ class App extends Component {
       <Navbar></Navbar>
         <Wrapper>
           <Title>Cartoon List</Title>
+          <h1> {this.state.clickMessage}</h1>
           {this.state.cartoons.map(cartoon => (
             <CartoonCard
               clickCartoon={this.clickCartoon}
