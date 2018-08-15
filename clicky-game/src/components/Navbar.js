@@ -17,13 +17,13 @@ const styles = {
 
 // We use JSX curly braces to evaluate the style object on the JSX tag
 
-const Navbar = () => (
+const Navbar = (props) => (
   <nav style={styles.navbarStyle} className="navbar">
     <a href="/">Clicky Game</a>
-    {/* <a href="/">Score: {props.score}</a> */}
-    <a href="/">Score: 3</a>
-    {/* <a href="/">Top Score: {props.topScore}</a> */}
-    <a href="/">Top Score: 9</a>
+    <a href="/">Score: {props.score}</a>
+    
+    <a href="/">Top Score: {props.topScore}</a>
+    
 
 
 

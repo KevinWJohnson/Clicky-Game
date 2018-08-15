@@ -32,13 +32,14 @@ class App extends Component {
   };
 
   clickCartoon = id => {
-    console.log("cartoon cliked id: " + id);
-
+    
     // Before the first cartoon is clicked the clickIdArray will be empty
-    // array does not exist, is not an array, or is empty
-    if (!Array.isArray(clickIdArray) || !clickIdArray.length) {
+    // array is empty
+      if(this.state.clickIdArray.length === 0) {
+
       // Adding 1 to the score
       const score = this.state.score + 1;
+
       let newArray = this.state.clickIdArray;
       newArray.push(id);
 
@@ -47,18 +48,21 @@ class App extends Component {
         clickIdArray: newArray,
         cartoons: shuffleArray(cartoons)
       });
-      console.log("newArray before else: " + newArray);
-      console.log("clickIdArray before 1st else: " + clickIdArray);
+
+      this.setState({ clickMessage: "You guessed correctly!" });
+      
     } else {
+      console.log("else")
       // Filter this.state.clickIdArray for cartoons with an id not equal to the id being clicked
       const filclickIdArray = this.state.clickIdArray.filter(pickedID => {
-        return pickedID.id === id;
+        return pickedID === id;
       });
 
       console.log("filclickIdArray: " + filclickIdArray);
       // The filclickIdArray will be empty is the cartoon was not clicked previously by the person
-      // array does not exist, is not an array, or is empty
+      // array is empty
       if (!Array.isArray(filclickIdArray) || !filclickIdArray.length) {
+
         // Adding 1 to the score
         const score = this.state.score + 1;
 
@@ -71,10 +75,10 @@ class App extends Component {
           cartoons: shuffleArray(cartoons)
         });
         this.setState({ clickMessage: "You guessed correctly!" });
-        console.log("clickIdArray before else: " + clickIdArray);
+        
       } else {
         // Setting the top score
-        if (this.state.score > this.topScore) {
+        if (this.state.score > this.state.topScore) {
           const score = this.state.score;
           const topScore = this.state.score;
           this.setState({ topScore: score });
@@ -95,7 +99,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar 
+          score={this.state.score}
+          topScore={this.state.topScore}
+        />
         <Wrapper>
           <Title>Cartoon List</Title>
           <h1> {this.state.clickMessage}</h1>
