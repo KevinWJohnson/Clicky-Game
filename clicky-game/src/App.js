@@ -32,11 +32,9 @@ class App extends Component {
   };
 
   clickCartoon = id => {
-    
     // Before the first cartoon is clicked the clickIdArray will be empty
     // array is empty
-      if(this.state.clickIdArray.length === 0) {
-
+    if (this.state.clickIdArray.length === 0) {
       // Adding 1 to the score
       const score = this.state.score + 1;
 
@@ -50,18 +48,17 @@ class App extends Component {
       });
 
       this.setState({ clickMessage: "You guessed correctly!" });
-      
     } else {
-      console.log("else")
+      console.log("else");
       // Filter this.state.clickIdArray for cartoons with an id not equal to the id being clicked
       const filclickIdArray = this.state.clickIdArray.filter(pickedID => {
         return pickedID === id;
       });
 
-      console.log("filclickIdArray: " + filclickIdArray);
       // The filclickIdArray will be empty is the cartoon was not clicked previously by the person
       // array is empty
       if (!Array.isArray(filclickIdArray) || !filclickIdArray.length) {
+        //if(this.state.filclickIdArray.length === 0) {
 
         // Adding 1 to the score
         const score = this.state.score + 1;
@@ -75,7 +72,6 @@ class App extends Component {
           cartoons: shuffleArray(cartoons)
         });
         this.setState({ clickMessage: "You guessed correctly!" });
-        
       } else {
         // Setting the top score
         if (this.state.score > this.state.topScore) {
@@ -99,13 +95,12 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar 
-          score={this.state.score}
-          topScore={this.state.topScore}
-        />
+        <Navbar score={this.state.score} topScore={this.state.topScore} />
         <Wrapper>
           <Title>Cartoon List</Title>
-          <h1> {this.state.clickMessage}</h1>
+          <div className="col-md-12">
+            <h1> {this.state.clickMessage}</h1>
+          </div>
           {this.state.cartoons.map(cartoon => (
             <CartoonCard
               clickCartoon={this.clickCartoon}
