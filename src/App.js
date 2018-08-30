@@ -7,18 +7,6 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-var clickIdArray = [];
-
-function shuffleArray(array) {
-  let i = array.length - 1;
-  for (; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-  return array;
-}
 
 class App extends Component {
   // Setting this.state.cartoons to the cartoons json array
@@ -31,9 +19,20 @@ class App extends Component {
       "Click on an image to earn points, but don't click on any more than once!"
   };
 
+shuffleArray = (array) => {
+  let i = array.length - 1;
+  for (; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
+
+
   clickCartoon = id => {
-    // Before the first cartoon is clicked the clickIdArray will be empty
-    // array is empty
+    // Before the first cartoon is clicked, the clickIdArray will be empty
     if (this.state.clickIdArray.length === 0) {
       // Adding 1 to the score
       const score = this.state.score + 1;
@@ -44,21 +43,19 @@ class App extends Component {
       this.setState({
         score,
         clickIdArray: newArray,
-        cartoons: shuffleArray(cartoons)
+        cartoons: this.shuffleArray(cartoons)
       });
 
       this.setState({ clickMessage: "You guessed correctly!" });
     } else {
-      console.log("else");
-      // Filter this.state.clickIdArray for cartoons with an id not equal to the id being clicked
+    
+      // Filter this.state.clickIdArray for cartoons with an id equal to the id being clicked
       const filclickIdArray = this.state.clickIdArray.filter(pickedID => {
         return pickedID === id;
       });
 
-      // The filclickIdArray will be empty is the cartoon was not clicked previously by the person
-      // array is empty
+      // The filclickIdArray will be empty if the cartoon was not clicked previously by the person
       if (!Array.isArray(filclickIdArray) || !filclickIdArray.length) {
-        //if(this.state.filclickIdArray.length === 0) {
 
         // Adding 1 to the score
         const score = this.state.score + 1;
@@ -69,14 +66,13 @@ class App extends Component {
         this.setState({
           score,
           clickIdArray: newArray,
-          cartoons: shuffleArray(cartoons)
+          cartoons: this.shuffleArray(cartoons)
         });
         this.setState({ clickMessage: "You guessed correctly!" });
       } else {
         // Setting the top score
         if (this.state.score > this.state.topScore) {
           const score = this.state.score;
-          const topScore = this.state.score;
           this.setState({ topScore: score });
         }
 
@@ -84,7 +80,7 @@ class App extends Component {
         this.setState({
           score: 0,
           clickIdArray: [],
-          cartoons: shuffleArray(cartoons)
+          cartoons: this.shuffleArray(cartoons)
         });
         this.setState({ clickMessage: "You guessed incorrectly!" });
       }
